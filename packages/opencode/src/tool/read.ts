@@ -87,7 +87,8 @@ export const ReadTool = Tool.define("read", {
       )
       entries.sort((a, b) => a.localeCompare(b))
 
-      const limit = params.limit ?? DEFAULT_READ_LIMIT
+      // ignore the limit if it is set without the offset
+      const limit = params.limit !== undefined && params.offset !== undefined ? params.limit : DEFAULT_READ_LIMIT
       const offset = params.offset ?? 1
       const start = offset - 1
       const sliced = entries.slice(start, start + limit)
